@@ -98,6 +98,33 @@ module Fakturownia
       http.delete(whole_url)
     end
 
+
+    # Get all clients in XML
+    def self.clients
+      endpoint = "https://#{Fakturownia.account_name}.fakturownia.pl/clients.xml"
+      response = self.make_get_request(endpoint)
+
+      (response.code == '200') ? response.body : nil
+    end
+
+    # Get client based on client_id
+    # Return in XML
+    def self.client client_id
+      endpoint = "https://#{Fakturownia.account_name}.fakturownia.pl/clients/#{client_id}.xml"
+      response = self.make_get_request(endpoint)
+
+      (response.code == '200') ? response.body : nil
+    end
+
+    # Get client based on email and password
+    # Return in XML
+    def self.client_by_email_and_password email, password
+      endpoint = "https://#{Fakturownia.account_name}.fakturownia.pl/clients/check"
+      response = self.make_get_request(endpoint, { :email => email, :password => password })
+
+      (response.code == '200' and response.body.to_s != 'brak klienta') ? response.body : nil
+    end
+
     
     # Make GET request returning response
     def self.make_get_request endpoint, additional_params = {}
