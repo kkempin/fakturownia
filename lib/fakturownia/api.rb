@@ -12,7 +12,7 @@ module Fakturownia
 
     # Get JSON-formatted invoice based on order id
     def self.invoice_by_order_id order_id
-      endpoint = "https://#{Fakturownia.account_name}.fakturownia.pl/invoices"
+      endpoint = "https://#{Fakturownia.account_name}.fakturownia.pl/invoices.json"
       response = self.make_get_request(endpoint, { :oid => order_id })
 
       (response.code == '200') ? JSON.parse(response.body) : nil 
