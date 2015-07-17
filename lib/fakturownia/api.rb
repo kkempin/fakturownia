@@ -66,7 +66,7 @@ module Fakturownia
     # Update invoice
     # invoice_id - id of invoice from fakturownia
     def self.update invoice_id, invoice_json
-      endpoint = "https://#{Fakturownia.account_name}.fakturownia.pl/invoices/#{invoice.fakturownia_id}.json"
+      endpoint = "https://#{Fakturownia.account_name}.fakturownia.pl/invoices/#{invoice_id}.json"
       uri = URI.parse(endpoint) 
 
       json_params = { 
