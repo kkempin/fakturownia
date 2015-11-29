@@ -7,7 +7,7 @@ module Fakturownia
       endpoint = "https://#{Fakturownia.account_name}.fakturownia.pl/invoices/#{invoice_id}.json"
       response = self.make_get_request(endpoint)
 
-      (response.code == '200') ? JSON.parse(response.body) : nil
+      JSON.parse(response.body)
     end
 
     # Get JSON-formatted invoice based on order id
@@ -15,7 +15,7 @@ module Fakturownia
       endpoint = "https://#{Fakturownia.account_name}.fakturownia.pl/invoices.json"
       response = self.make_get_request(endpoint, { :oid => order_id })
 
-      (response.code == '200') ? JSON.parse(response.body) : nil
+      JSON.parse(response.body)
     end
 
     # Get JSON-formatted invoices based from given period
@@ -39,7 +39,7 @@ module Fakturownia
       end
       response = self.make_get_request(endpoint, params)
 
-      (response.code == '200') ? JSON.parse(response.body) : nil
+      JSON.parse(response.body)
     end
 
     # Get invoice PDF based on invoice id
@@ -47,9 +47,8 @@ module Fakturownia
       endpoint = "https://#{Fakturownia.account_name}.fakturownia.pl/invoices/#{invoice_id}.pdf"
       response = self.make_get_request(endpoint)
 
-      (response.code == '200') ? response.body : nil
+      response.body
     end
-
 
     # Create new invoice
     def self.create invoice_json
@@ -68,9 +67,8 @@ module Fakturownia
       http.use_ssl = true
       http.verify_mode = OpenSSL::SSL::VERIFY_NONE
       response = http.start {|h| h.request(request)}
-      (response.code == '201') ? JSON.parse(response.body) : nil
+      JSON.parse(response.body)
     end
-
 
     # Update invoice
     # invoice_id - id of invoice from fakturownia
@@ -91,7 +89,7 @@ module Fakturownia
       http.verify_mode = OpenSSL::SSL::VERIFY_NONE
       response = http.start {|h| h.request(request)}
 
-      (response.code == '201') ? JSON.parse(response.body) : nil
+      JSON.parse(response.body)
     end
 
 
@@ -113,7 +111,7 @@ module Fakturownia
       endpoint = "https://#{Fakturownia.account_name}.fakturownia.pl/clients.xml"
       response = self.make_get_request(endpoint)
 
-      (response.code == '200') ? response.body : nil
+      response.body
     end
 
     # Get client based on client_id
@@ -122,7 +120,7 @@ module Fakturownia
       endpoint = "https://#{Fakturownia.account_name}.fakturownia.pl/clients/#{client_id}.xml"
       response = self.make_get_request(endpoint)
 
-      (response.code == '200') ? response.body : nil
+      response.body
     end
 
     # Get client based on email and password
