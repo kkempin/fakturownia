@@ -14,4 +14,17 @@ module Fakturownia
   def self.setup
     yield self
   end
+
+  def self.as(api_token:, account_name:)
+    old_api_token = self.api_token
+    old_account_name = self.account_name
+
+    self.api_token = api_token
+    self.account_name = account_name
+
+    yield
+
+    self.api_token = old_api_token
+    self.account_name = old_account_name
+  end
 end
